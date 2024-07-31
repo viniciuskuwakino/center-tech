@@ -26,10 +26,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
+    Route::get('/clients/create', [ClientController::class, 'create'])->name('clients.create');
+    Route::post('/clients/create', [ClientController::class, 'register'])->name('clients.register');
 
     Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
     Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
     Route::post('/tasks/create', [TaskController::class, 'register'])->name('tasks.register');
+    Route::put('/tasks', [TaskController::class, 'update'])->name('tasks.update');
 
 });
 

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onBeforeMount } from 'vue'
 import {
     Combobox,
     ComboboxInput,
@@ -41,6 +41,7 @@ let filteredClient = computed(() =>
 watch(selected, () => {
     emit('getClient', selected)
 })
+
 
 
 </script>
