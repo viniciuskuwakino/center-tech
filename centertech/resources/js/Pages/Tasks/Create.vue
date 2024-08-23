@@ -76,7 +76,6 @@
                                     type="text"
                                     class="mt-1 block w-full"
                                     v-model="form.model"
-                                    required
                                 />
 
                                 <InputError class="mt-2" :message="form.errors.model" />
@@ -90,7 +89,6 @@
                                     type="text"
                                     class="mt-1 block w-full"
                                     v-model="form.serial_number"
-                                    required
                                 />
 
                                 <InputError class="mt-2" :message="form.errors.serial_number" />
@@ -104,7 +102,6 @@
                                     type="text"
                                     class="mt-1 block w-full"
                                     v-model="form.description"
-                                    required
                                 />
 
                                 <InputError class="mt-2" :message="form.errors.description" />
@@ -118,6 +115,7 @@
                                     type="text"
                                     class="mt-1 block w-full"
                                     v-model="form.price"
+                                    v-money="money"
                                     required
                                 />
 
@@ -149,7 +147,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import ComboBox from "@/Components/ComboBox.vue";
-
+import { VMoney } from 'v-money'
 
 
 export default {
@@ -164,6 +162,9 @@ export default {
         SecondaryButton,
         ComboBox
     },
+    directives: {
+        money: VMoney
+    },
     props: {
         clients: {
             type: Array,
@@ -171,7 +172,14 @@ export default {
     },
     data() {
         return {
-           
+            money: {
+                decimal: '.',
+                thousands: ',',
+                prefix: 'R$ ',
+                suffix: '',
+                precision: 2,
+                masked: false /* doesn't work with directive */
+            }
         }
     },
     setup() {
@@ -187,17 +195,13 @@ export default {
         })
 
         const submit = () => {
-            form.post(route('tasks.register'), {
+
+            form.transform((data) => ({
+                ...data,
+                price: data.price.replace('R$', '').replaceAll(',', '')
+            })).post(route('tasks.register'), {
                 onSuccess: () => form.reset(),
             })
-
-            // form
-            //     .transform((data) => ({
-            //         ...data,
-            //         remember: data.remember ? 'on' : '',
-            //     }))
-            //     .post('/login')
-
 
             // form.put(route('password.update'), {
             //     preserveScroll: true,

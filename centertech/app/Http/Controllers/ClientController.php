@@ -10,14 +10,21 @@ use \Inertia\Response;
 
 class ClientController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $search = isset($request['search']) ? $request['search'] : "";
+
         $clients = Client::with('tasks')
                         ->where('user_id', Auth::user()->id)
-                        ->get();
+                        ->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('phone', 'like', '%' . $search . '%')
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(10)
+                        ->withQueryString();
 
         return Inertia::render('Clients/List', [
-            'clients' => $clients
+            'clients'   => $clients,
+            'filters'   => $request['search']
         ]);
     }
 

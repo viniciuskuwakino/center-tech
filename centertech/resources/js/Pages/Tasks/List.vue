@@ -41,7 +41,7 @@
                             </div>
                         </div>
                         
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 light:text-gray-400">
+                        <table class="table-auto w-full text-sm text-left rtl:text-right text-gray-500 light:text-gray-400">
                             <thead class="text-s text-gray-700 bg-gray-100 light:bg-gray-700 light:text-gray-400">
                                 <tr>
                                     <!-- <th scope="col" class="p-4">
@@ -62,12 +62,12 @@
                                     <th scope="col" class="px-6 py-3">
                                         Marca
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <!-- <th scope="col" class="px-6 py-3">
                                         Modelo
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         Número de série
-                                    </th>
+                                    </th> -->
                                     <th scope="col" class="px-6 py-3">
                                         Preço
                                     </th>
@@ -87,31 +87,31 @@
                                             <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                                         </div> -->
                                     <!-- </td> -->
-                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap light:text-white">
+                                    <td class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap light:text-white">
                                         {{ formatDate(task['created_at']) }}
                                     </td>
-                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap light:text-white">
+                                    <th scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap light:text-white">
                                         <div class="">
                                             <p>{{ task['client']['name'] }} </p>
                                             <p>{{ phoneMask(task['client']['phone']) }} </p>
                                         </div>
                                     </th>
-                                    <td class="px-6 py-4">
+                                    <td class="px-6 py-3">
                                         {{ task['device'] }}
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-6 py-3">
                                         {{ task['brand'] }}
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <!-- <td class="px-6 py-3">
                                         {{ task['model'] }}
                                     </td>
-                                    <td class="px-6 py-4">
-                                        {{ task['serial_number'] }}
-                                    </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-6 py-3">
+                                        <p>{{ task['serial_number'] }}</p>
+                                    </td> -->
+                                    <td class="px-6 py-3">
                                         R$ {{ task['price'] }}
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-6 py-3">
                                         <span 
                                             v-if="task['status']"
                                             class="inline-flex items-center rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/60"
@@ -126,7 +126,7 @@
                                             Pendente
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4 flex justify-center mt-1">
+                                    <td class="px-6 py-3 flex justify-center mt-1">
                                         <!-- <button type="button" @click="handleInfo" class="text-white bg-blue-400 hover:bg-blue-500 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-1 py-1 text-center inline-flex items-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
@@ -142,50 +142,7 @@
                             </tbody>
                         </table>
 
-                        {{ tasks }}
-
-                        <Pagination :links="tasks['links']" />
-
-                        <!-- <nav aria-label="Page navigation example" class="flex justify-center mt-5">
-                            <ul class="inline-flex -space-x-px text-sm" v-for="link in tasks['links']">
-                                <li>
-                                    <Link
-                                        v-if="link['url']"
-                                        :href="link['url']"
-                                        class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 light:bg-gray-800 light:border-gray-700 light:text-gray-400 light:hover:bg-gray-700 light:hover:text-white"
-                                    >
-                                        Anterior
-                                    </Link>
-
-                                    <Link
-                                        v-else-if="link['label'].includes('Next')"
-                                        :href="link['url']"
-                                        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 light:bg-gray-800 light:border-gray-700 light:text-gray-400 light:hover:bg-gray-700 light:hover:text-white"
-                                    >
-                                        Próximo
-                                    </Link>
-
-                                    <div v-else>
-                                        <Link
-                                            v-if="link['active']"
-                                            aria-current="page"
-                                            :href="link['url']"
-                                            class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 light:border-gray-700 light:bg-gray-700 light:text-white"
-                                        >
-                                            {{ link['label'] }}
-                                        </Link>
-                                        <Link
-                                            v-else
-                                            :href="link['url']"
-                                            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 light:bg-gray-800 light:border-gray-700 light:text-gray-400 light:hover:bg-gray-700 light:hover:text-white"
-                                        >
-                                            {{ link['label'] }}
-                                        </Link>
-
-                                    </div>
-                                </li>
-                            </ul>
-                        </nav> -->
+                        <Pagination :links="tasks['links']" :from="tasks['from']" :to="tasks['to']" :total="tasks['total']" />
 
                     </div>
                 </div>
@@ -262,7 +219,6 @@
                             type="text"
                             class="mt-1 block w-full"
                             v-model="form.model"
-                            required
                         />
 
                         <InputError class="mt-2" :message="form.errors.model" />
@@ -276,7 +232,6 @@
                             type="text"
                             class="mt-1 block w-full"
                             v-model="form.serial_number"
-                            required
                         />
 
                         <InputError class="mt-2" :message="form.errors.serial_number" />
@@ -299,7 +254,6 @@
                             class="resize-none border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                             rows="3"
                             v-model="form.description"
-                            required
                         ></textarea>
 
                         <InputError class="mt-2" :message="form.errors.description" />
@@ -313,6 +267,7 @@
                             type="text"
                             class="mt-1 block w-full"
                             v-model="form.price"
+                            v-money="money"
                             required
                         />
 
@@ -361,7 +316,7 @@ import SecondaryButton from '@/Components/SecondaryButton.vue'
 import Pagination from '@/Components/Pagination.vue'
 import Modal from '@/Components/Modal.vue'
 import throttle from 'lodash/throttle'
-
+import { VMoney } from 'v-money'
 
 export default {
     components: {
@@ -375,6 +330,9 @@ export default {
         SecondaryButton,
         Pagination,
         Modal
+    },
+    directives: {
+        money: VMoney
     },
     props: {
         tasks: {
@@ -411,7 +369,14 @@ export default {
     },
     data() {
         return {
-           
+            money: {
+                decimal: '.',
+                thousands: ',',
+                prefix: 'R$ ',
+                suffix: '',
+                precision: 2,
+                masked: false /* doesn't work with directive */
+            }
         }
     },
     setup(props) {
@@ -465,9 +430,12 @@ export default {
 
         const updateTask = () => {
             form.status = JSON.parse(form.status)
+            form.price = form.price.replace('R$', '').replaceAll(',', '')
+
             form.put(route('tasks.update'), {
                 onSuccess: () => openTaskInfo.value = false
             })
+
             // form.put(route('password.update'), {
             //     preserveScroll: true,
             //     onSuccess: () => form.reset(),
@@ -498,8 +466,6 @@ export default {
                 replace: true
             })
         }), 500)
-
-        // Procurar por nome ou telefone
 
         return {
             form,

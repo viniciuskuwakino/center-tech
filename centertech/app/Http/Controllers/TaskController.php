@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTaskRequest;
 use App\Models\Client;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
-use function PHPSTORM_META\type;
 
 class TaskController extends Controller
 {
@@ -25,7 +26,7 @@ class TaskController extends Controller
                         ->orWhere('phone', 'like', '%' . $search . '%');
                 })
                 ->orderBy('created_at', 'desc')
-                ->paginate(2)
+                ->paginate(10)
                 ->withQueryString();
 
 
@@ -47,13 +48,10 @@ class TaskController extends Controller
         ]);
     }
 
-    public function register(Request $request)
+    public function register(StoreTaskRequest $request)
     {
-        $data = $request->all();
 
-        $request->validate([
-            'client_id'  => 'required',
-        ]);
+        $data = $request->all();
 
         Task::create([
             'user_id'       => Auth::user()->id,
@@ -67,17 +65,15 @@ class TaskController extends Controller
             'status'        => false,
         ]);
 
-        // $tasks = Task::with('client')
-        //         ->whereHas('client', function($query) {
-        //             $query->where('user_id', Auth::user()->id);
-        //         })
-        //         ->get();
+        $tasks = Task::with('client')
+                ->whereHas('client', function($query) {
+                    $query->where('user_id', Auth::user()->id);
+                })
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
 
-        // return Inertia::render('Tasks/List', [
-        //     'tasks' => $tasks
-        // ]);
+        return Redirect::route('tasks.index')->with(['tasks'], [$tasks]);
 
-        return redirect()->route('tasks.index');
     }
     
     public function update(Request $request)

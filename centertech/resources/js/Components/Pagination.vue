@@ -1,8 +1,5 @@
 <template>
-    <div>
-        <div class="flex justify-center mt-5">
-            asd
-        </div>
+    <div class="mt-3">
         <nav aria-label="Page navigation example" class="flex justify-center">
             <ul class="inline-flex -space-x-px text-sm" v-for="link in links">
                 <li>
@@ -41,6 +38,19 @@
                 </li>
             </ul>
         </nav>
+        <div class="flex justify-center mt-2">
+            <div>
+                <p class="text-sm text-gray-700">
+                    Mostrando de
+                    <span class="font-medium">{{ from }}</span>
+                    a
+                    <span class="font-medium">{{ to }}</span>
+                    de
+                    <span class="font-medium">{{ total }}</span>
+                    resultados
+                </p>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -54,6 +64,15 @@ export default {
     props: {
         links: {
             type: Array,
+        },
+        from: {
+            type: Number,
+        },
+        to: {
+            type: Number,
+        },
+        total: {
+            type: Number,
         },
     }
 }
