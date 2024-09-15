@@ -57,6 +57,7 @@
                                     type="text"
                                     class="mt-1 block w-full"
                                     v-model="form.phone"
+                                    v-mask="['(##) #####-####', '(##) ####-####']"
                                     required
                                 />
 
@@ -87,7 +88,7 @@ import TextInput from '@/Components/TextInput.vue';
 import {Head, Link, useForm, usePage} from '@inertiajs/vue3';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-
+import { mask } from 'vue-the-mask'
 
 
 export default {
@@ -100,6 +101,9 @@ export default {
         Head,
         AuthenticatedLayout,
         SecondaryButton,
+    },
+    directives: {
+        mask
     },
     props: {
         clients: {
@@ -119,6 +123,8 @@ export default {
         })
 
         const submit = () => {
+            form.phone = form.phone.replace(/\D/g, '')
+            
             form.post(route('clients.register'), {
                 onSuccess: () => form.reset(),
             })

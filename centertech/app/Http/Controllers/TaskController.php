@@ -54,7 +54,7 @@ class TaskController extends Controller
         $data = $request->all();
 
         Task::create([
-            'user_id'       => Auth::user()->id,
+            // 'user_id'       => Auth::user()->id,
             'cen_client_id' => $data['client_id'],
             'device'        => $data['device'],
             'brand'         => $data['brand'],
@@ -79,7 +79,6 @@ class TaskController extends Controller
     public function update(Request $request)
     {
         $data = $request->all();
-
         $taskUpdated = Task::find($data['task_id']);
 
         $taskUpdated->device = $data['device'];
@@ -91,6 +90,14 @@ class TaskController extends Controller
         $taskUpdated->status = $data['status'];
 
         $taskUpdated->save();
+
+        return;
+    }
+
+    public function destroy(Request $request)
+    {
+        $id = $request['id'];
+        Task::find($id)->delete();
 
         return;
     }

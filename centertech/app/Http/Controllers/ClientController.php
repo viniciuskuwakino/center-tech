@@ -10,8 +10,10 @@ use \Inertia\Response;
 
 class ClientController extends Controller
 {
-    public function index(Request $request): Response
+    public function index(Request $request)
     {
+
+        // dd(session()->all());
         $search = isset($request['search']) ? $request['search'] : "";
 
         $clients = Client::with('tasks')
@@ -25,6 +27,16 @@ class ClientController extends Controller
         return Inertia::render('Clients/List', [
             'clients'   => $clients,
             'filters'   => $request['search']
+        ]);
+    }
+
+    public function show(int $id)
+    {
+
+        $client = Client::with('tasks')->find($id);
+
+        return Inertia::render('Clients/Show', [
+            'client' => $client
         ]);
     }
 
@@ -66,5 +78,24 @@ class ClientController extends Controller
         // ]);
 
         return redirect()->route('clients.index');
+    }
+
+    public function update(Request $request)
+    {
+        $data = $request->all();
+
+        $request->validate([
+            'name'  => 'required | string | min:3 | max:100',
+            'phone' => 'required | numeric | digits_between:8,12'
+        ]);
+
+        $client = Client::find($data['client_id']);
+
+        $client->name = $data['name'];
+        $client->phone = $data['phone'];
+
+        $client->save();
+
+        return;
     }
 }
