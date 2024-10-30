@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('cen_tasks', function (Blueprint $table) {
-            $table->softDeletes();
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->boolean('status')->after('price')->default(false);
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('cen_tasks', function (Blueprint $table) {
-            $table->dropSoftDeletes();
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->dropColumn('status');
         });
     }
 };

@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cen_tasks', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->string('device', 100);
-            $table->string('brand', 100);
-            $table->string('model', 100);
-            $table->string('serial_number', 100);
-            $table->text('description');
-            $table->decimal('price', 9, 2);
+            $table->string('name', 100);
+            $table->string('phone', 12);
+            
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cen_tasks');
+        Schema::dropIfExists('clients');
     }
 };

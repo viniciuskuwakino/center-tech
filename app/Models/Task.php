@@ -11,14 +11,6 @@ class Task extends Model
 {
     use HasFactory, SoftDeletes;
 
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'cen_tasks';
-
-
     protected $casts = [
         'status' => 'boolean',
     ];
@@ -29,7 +21,7 @@ class Task extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'cen_client_id',
+        'client_id',
         'device',
         'brand',
         'model',
@@ -41,6 +33,6 @@ class Task extends Model
 
     public function client(): BelongsTo
     {
-        return $this->belongsTo(Client::class, 'cen_client_id');
+        return $this->belongsTo(Client::class);
     }
 }

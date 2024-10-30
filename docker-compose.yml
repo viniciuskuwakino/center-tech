@@ -20,7 +20,7 @@ services:
     image: phpmyadmin:5.2
     restart: always
     ports:
-      - "8888:80"
+      - "3305:80"
     networks:
       - center-tech-network
     environment:

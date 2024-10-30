@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::table('cen_tasks', function (Blueprint $table) {
+        // Schema::table('tasks', function (Blueprint $table) {
         //     $table->foreignId('user_id')
         //         ->after('id')
         //         ->constrained()
@@ -24,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Schema::table('cen_tasks', function (Blueprint $table) {
+        // Schema::table('tasks', function (Blueprint $table) {
         //     $table->dropForeign(['user_id']);
         //     $table->dropColumn('user_id');
         // });

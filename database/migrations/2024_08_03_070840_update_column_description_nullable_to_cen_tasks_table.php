@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('cen_clients', function (Blueprint $table) {
-            $table->foreignId('user_id')
-                ->after('id')
-                ->constrained()
-                ->onDelete('cascade');
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->text('description')->nullable()->change();
         });
     }
 
@@ -24,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('cen_clients', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->text('description')->nullable(false)->change();
         });
     }
 };

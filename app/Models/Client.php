@@ -12,13 +12,6 @@ class Client extends Model
     use HasFactory;
 
     /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'cen_clients';
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -36,7 +29,7 @@ class Client extends Model
 
     public function tasks(): HasMany
     {
-        return $this->hasMany(Task::class, 'cen_client_id');
+        return $this->hasMany(Task::class);
     }
 
 }

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('cen_tasks', function (Blueprint $table) {
+        Schema::table('tasks', function (Blueprint $table) {
             $table->string('model', 100)->nullable()->change();
             $table->string('serial_number', 100)->nullable()->change();
         });
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('cen_tasks', function (Blueprint $table) {
+        Schema::table('tasks', function (Blueprint $table) {
             $table->string('model', 100)->nullable(false)->change();
             $table->string('serial_number', 100)->nullable(false)->change();
         });

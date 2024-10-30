@@ -55,7 +55,7 @@ class TaskController extends Controller
 
         Task::create([
             // 'user_id'       => Auth::user()->id,
-            'cen_client_id' => $data['client_id'],
+            'client_id'     => $data['client_id'],
             'device'        => $data['device'],
             'brand'         => $data['brand'],
             'model'         => $data['model'],
