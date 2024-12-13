@@ -30,7 +30,6 @@
 
                         </header>
 
-
 <!--                        <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6">-->
 <!--                        class="col-span-3"-->
                         <form @submit.prevent="submit" class="mt-6 space-y-6">
@@ -89,7 +88,8 @@ import {Head, Link, useForm, usePage} from '@inertiajs/vue3';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import { mask } from 'vue-the-mask'
-
+import 'vue3-toastify/dist/index.css';
+import { toast } from 'vue3-toastify'
 
 export default {
     components: {
@@ -126,7 +126,17 @@ export default {
             form.phone = form.phone.replace(/\D/g, '')
             
             form.post(route('clients.register'), {
-                onSuccess: () => form.reset(),
+                onSuccess: () => {
+
+                    form.reset()
+
+                    toast("Cliente cadastrado com sucesso", {
+                        "theme": "auto",
+                        "type": "success",
+                        "dangerouslyHTMLString": true
+                    })
+
+                },
             })
             // form.put(route('password.update'), {
             //     preserveScroll: true,

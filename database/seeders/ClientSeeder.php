@@ -49,6 +49,46 @@ class ClientSeeder extends Seeder
                 'user_id' => $user->id,
                 'name' => 'Giovana Kuwakino',
                 'phone' => $phoneNumber++
+            ],
+            [
+                'user_id' => $user->id,
+                'name' => 'Pedro Torz',
+                'phone' => $phoneNumber++
+            ],
+            [
+                'user_id' => $user->id,
+                'name' => 'Michael Souza',
+                'phone' => $phoneNumber++
+            ],
+            [
+                'user_id' => $user->id,
+                'name' => 'Kadmiel Kleb',
+                'phone' => $phoneNumber++
+            ],
+            [
+                'user_id' => $user->id,
+                'name' => 'Jessica Mendes',
+                'phone' => $phoneNumber++
+            ],
+            [
+                'user_id' => $user->id,
+                'name' => 'Anderson Antunes',
+                'phone' => $phoneNumber++
+            ],
+            [
+                'user_id' => $user->id,
+                'name' => 'Fabio Junior',
+                'phone' => $phoneNumber++
+            ],
+            [
+                'user_id' => $user->id,
+                'name' => 'Clarencio Desz',
+                'phone' => $phoneNumber++
+            ],
+            [
+                'user_id' => $user->id,
+                'name' => 'Jhonathan Cunha',
+                'phone' => $phoneNumber++
             ]
         ];
 

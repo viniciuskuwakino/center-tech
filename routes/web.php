@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
-    Route::get('/clients/{id}', [ClientController::class, 'show'])->name('clients.show');
+    Route::get('/clients/show/{id}', [ClientController::class, 'show'])->name('clients.show');
     Route::get('/clients/create', [ClientController::class, 'create'])->name('clients.create');
     Route::post('/clients/create', [ClientController::class, 'register'])->name('clients.register');
     Route::put('/clients', [ClientController::class, 'update'])->name('clients.update');

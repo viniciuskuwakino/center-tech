@@ -38,88 +38,94 @@
 
 <!--                        <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6">-->
 <!--                        class="col-span-3"-->
-                        <form @submit.prevent="submit" class="grid grid-cols-4 gap-4 mt-6">
-                            <div>
-                                <InputLabel for="device" value="Dispositivo" />
+                        <!-- <form @submit.prevent="submit" class="grid grid-cols-4 gap-4 mt-6"> -->
+                        <form @submit.prevent="submit" class="mt-6 space-y-6">
+                            
+                            <div class="grid md:grid-cols-4 md:gap-6">
+                                <div>
+                                    <InputLabel for="device" value="Dispositivo" />
 
-                                <TextInput
-                                    id="name"
-                                    type="text"
-                                    class="mt-1 block w-full"
-                                    v-model="form.device"
-                                    required
-                                    autofocus
-                                />
+                                    <TextInput
+                                        id="name"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.device"
+                                        required
+                                        autofocus
+                                    />
 
-                                <InputError class="mt-2" :message="form.errors.device" />
+                                    <InputError class="mt-2" :message="form.errors.device" />
+                                </div>
+
+                                <div>
+                                    <InputLabel for="brand" value="Marca" />
+
+                                    <TextInput
+                                        id="brand"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.brand"
+                                        required
+                                    />
+
+                                    <InputError class="mt-2" :message="form.errors.brand" />
+                                </div>
+
+                                <div>
+                                    <InputLabel for="model" value="Modelo" />
+
+                                    <TextInput
+                                        id="model"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.model"
+                                    />
+
+                                    <InputError class="mt-2" :message="form.errors.model" />
+                                </div>
+
+                                <div>
+                                    <InputLabel for="serial_number" value="Número de série" />
+
+                                    <TextInput
+                                        id="serial_number"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.serial_number"
+                                    />
+
+                                    <InputError class="mt-2" :message="form.errors.serial_number" />
+                                </div>
                             </div>
 
-                            <div>
-                                <InputLabel for="brand" value="Marca" />
+                            <div class="grid md:grid-cols-4 md:gap-6">
+                                <div class="md:col-span-3">
+                                    <InputLabel for="description" value="Descrição" />
 
-                                <TextInput
-                                    id="brand"
-                                    type="text"
-                                    class="mt-1 block w-full"
-                                    v-model="form.brand"
-                                    required
-                                />
+                                    <TextInput
+                                        id="description"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.description"
+                                    />
 
-                                <InputError class="mt-2" :message="form.errors.brand" />
-                            </div>
+                                    <InputError class="mt-2" :message="form.errors.description" />
+                                </div>
 
-                            <div>
-                                <InputLabel for="model" value="Modelo" />
+                                <div>
+                                    <InputLabel for="price" value="Preço" />
 
-                                <TextInput
-                                    id="model"
-                                    type="text"
-                                    class="mt-1 block w-full"
-                                    v-model="form.model"
-                                />
+                                    <TextInput
+                                        id="price"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.price"
+                                        v-money="money"
+                                        required
+                                    />
 
-                                <InputError class="mt-2" :message="form.errors.model" />
-                            </div>
-
-                            <div>
-                                <InputLabel for="serial_number" value="Número de série" />
-
-                                <TextInput
-                                    id="serial_number"
-                                    type="text"
-                                    class="mt-1 block w-full"
-                                    v-model="form.serial_number"
-                                />
-
-                                <InputError class="mt-2" :message="form.errors.serial_number" />
-                            </div>
-
-                            <div class="col-span-3">
-                                <InputLabel for="description" value="Descrição" />
-
-                                <TextInput
-                                    id="description"
-                                    type="text"
-                                    class="mt-1 block w-full"
-                                    v-model="form.description"
-                                />
-
-                                <InputError class="mt-2" :message="form.errors.description" />
-                            </div>
-
-                            <div>
-                                <InputLabel for="price" value="Preço" />
-
-                                <TextInput
-                                    id="price"
-                                    type="text"
-                                    class="mt-1 block w-full"
-                                    v-model="form.price"
-                                    v-money="money"
-                                    required
-                                />
-
-                                <InputError class="mt-2" :message="form.errors.price" />
+                                    <InputError class="mt-2" :message="form.errors.price" />
+                                </div>
                             </div>
 
                             <div class="flex items-center gap-4">
@@ -148,7 +154,8 @@ import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import ComboBox from "@/Components/ComboBox.vue";
 import { VMoney } from 'v-money'
-
+import 'vue3-toastify/dist/index.css';
+import { toast } from 'vue3-toastify'
 
 export default {
     components: {
@@ -200,7 +207,17 @@ export default {
                 ...data,
                 price: data.price.replace('R$', '').replaceAll(',', '')
             })).post(route('tasks.register'), {
-                onSuccess: () => form.reset(),
+                onSuccess: () => {
+
+                    form.reset()
+
+                    toast("Serviço criado com sucesso", {
+                        "theme": "auto",
+                        "type": "success",
+                        "dangerouslyHTMLString": true
+                    })
+                
+                },
             })
 
             // form.put(route('password.update'), {

@@ -3,11 +3,22 @@
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Serviços</h2>
+            <div class="flex justify-between">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight content-center">Serviços</h2>
+                <Link :href="route('tasks.create')">
+                    <PrimaryButton>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 me-1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                        Serviço
+                    </PrimaryButton>
+                </Link>
+            </div>
         </template>
         
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <!-- <div class="p-6 text-gray-900">Clientes!</div>
                     <div class="p-6 text-gray-900">{{ clients }}</div> -->
@@ -29,7 +40,7 @@
                                     v-model="searchQuery"
                                 >
                             </div>
-                            <div class="relative mt-1">
+                            <!-- <div class="relative mt-1">
                                 <Link :href="route('tasks.create')">
                                     <PrimaryButton>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 me-1.5">
@@ -38,7 +49,7 @@
                                         Serviço
                                     </PrimaryButton>
                                 </Link>
-                            </div>
+                            </div> -->
                         </div>
                         
                         <table class="table-auto w-full text-sm text-left rtl:text-right text-gray-500 light:text-gray-400">
@@ -269,7 +280,7 @@
                         <InputError class="mt-2" :message="form.errors.description" />
                     </div>
 
-                    <div class="col-start-1 col-end-3">
+                    <div class="col-start-1 col-end-4">
                         <InputLabel for="price" value="Preço" />
 
                         <TextInput
@@ -284,7 +295,7 @@
                         <InputError class="mt-2" :message="form.errors.price" />
                     </div>
 
-                    <div class="col-start-3 col-end-5">
+                    <div class="col-start-4 col-end-5">
                         <InputLabel for="status" value="Situação" />
 
                         <div class="flex py-3">
@@ -349,6 +360,8 @@ import Pagination from '@/Components/Pagination.vue'
 import Modal from '@/Components/Modal.vue'
 import throttle from 'lodash/throttle'
 import { VMoney } from 'v-money'
+import 'vue3-toastify/dist/index.css';
+import { toast } from 'vue3-toastify'
 
 export default {
     components: {
@@ -474,7 +487,17 @@ export default {
             form.price = form.price.replace('R$', '').replaceAll(',', '')
 
             form.put(route('tasks.update'), {
-                onSuccess: () => openTaskEdit.value = false
+                onSuccess: () => {
+
+                    openTaskEdit.value = false
+
+                    toast("Serviço atualizado com sucesso", {
+                        "theme": "auto",
+                        "type": "success",
+                        "dangerouslyHTMLString": true
+                    })
+
+                },
             })
 
             // form.put(route('password.update'), {

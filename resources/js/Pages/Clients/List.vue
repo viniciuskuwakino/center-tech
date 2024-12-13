@@ -3,7 +3,18 @@
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Clientes</h2>
+            
+            <div class="flex justify-between">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight content-center">Clientes</h2>
+                <Link :href="route('clients.create')">
+                    <PrimaryButton>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 me-1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                        Cliente
+                    </PrimaryButton>
+                </Link>
+            </div>
         </template>
 
         <div class="py-12">
@@ -29,26 +40,16 @@
                                     v-model="searchQuery"
                                 >
                             </div>
-                            <div class="relative mt-1">
-                                <Link :href="route('clients.create')">
-                                    <PrimaryButton>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 me-1.5">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                        </svg>
-                                        Cliente
-                                    </PrimaryButton>
-                                </Link>
-                            </div>
                         </div>
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 light:text-gray-400">
                             <thead class="text-s text-gray-700 bg-gray-100 light:bg-gray-700 light:text-gray-400">
                                 <tr>
-                                    <th scope="col" class="p-4">
-                                        <div class="flex items-center">
+                                    <!-- <th scope="col" class="p-4">
+                                        <div class="flex items-center"> -->
                                             <!-- <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 light:focus:ring-blue-600 light:ring-offset-gray-800 light:focus:ring-offset-gray-800 focus:ring-2 light:bg-gray-700 light:border-gray-600">
                                             <label for="checkbox-all-search" class="sr-only">checkbox</label> -->
-                                        </div>
-                                    </th>
+                                        <!-- </div>
+                                    </th> -->
                                     <th scope="col" class="px-6 py-3">
                                         Nome
                                     </th>
@@ -59,18 +60,18 @@
                                         Serviços
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Ação
+                                        Ações
                                     </th>
                                 </tr>
                             </thead>
                             <tbody v-for="client in clients['data']" key="client.id">
                                 <tr class="bg-white border-b light:bg-gray-800 light:border-gray-700 hover:bg-gray-100 light:hover:bg-gray-600">
-                                    <td class="w-4 p-4">
-                                        <div class="flex items-center">
+                                    <!-- <td class="w-4 p-4">
+                                        <div class="flex items-center"> -->
                                             <!-- <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 light:focus:ring-blue-600 light:ring-offset-gray-800 light:focus:ring-offset-gray-800 focus:ring-2 light:bg-gray-700 light:border-gray-600">
                                             <label for="checkbox-table-search-1" class="sr-only">checkbox</label> -->
-                                        </div>
-                                    </td>
+                                        <!-- </div>
+                                    </td> -->
                                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap light:text-white">
                                         {{ client['name'] }}
                                     </th>
@@ -177,6 +178,8 @@ import InputError from '@/Components/InputError.vue'
 import InputLabel from '@/Components/InputLabel.vue'
 import TextInput from '@/Components/TextInput.vue'
 import { mask } from 'vue-the-mask'
+import 'vue3-toastify/dist/index.css';
+import { toast } from 'vue3-toastify'
 
 export default {
     components: {
@@ -270,7 +273,18 @@ export default {
             form.phone = form.phone.replace(/\D/g, '')
 
             form.put(route('clients.update'), {
-                onSuccess: () => openClientEdit.value = false
+
+                onSuccess: () => {
+
+                    openClientEdit.value = false
+
+                    toast("Dados do cliente foram atualizados", {
+                        "theme": "auto",
+                        "type": "success",
+                        "dangerouslyHTMLString": true
+                    })
+
+                },
             })
         };
 

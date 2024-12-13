@@ -69,7 +69,7 @@
                                         Situação
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Ação
+                                        Ações
                                     </th>
                                 </tr>
                             </thead>
@@ -246,7 +246,7 @@
 
                     </div>
 
-                    <div class="col-start-1 col-end-3">
+                    <div class="col-start-1 col-end-4">
                         <InputLabel for="price" value="Preço" />
 
                         <TextInput
@@ -260,7 +260,7 @@
 
                     </div>
 
-                    <div class="col-start-3 col-end-5">
+                    <div class="col-start-4 col-end-5">
                         <InputLabel for="status" value="Situação" />
 
                         <div class="flex py-3">

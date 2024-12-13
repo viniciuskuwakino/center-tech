@@ -13,7 +13,6 @@ class ClientController extends Controller
     public function index(Request $request)
     {
 
-        // dd(session()->all());
         $search = isset($request['search']) ? $request['search'] : "";
 
         $clients = Client::with('tasks')
@@ -28,6 +27,7 @@ class ClientController extends Controller
             'clients'   => $clients,
             'filters'   => $request['search']
         ]);
+
     }
 
     public function show(int $id)
@@ -38,10 +38,12 @@ class ClientController extends Controller
         return Inertia::render('Clients/Show', [
             'client' => $client
         ]);
+
     }
 
     public function create(): Response
     {
+
         $clients = Client::with('user')
                     ->where('user_id', Auth::user()->id)
                     ->get();
@@ -49,10 +51,12 @@ class ClientController extends Controller
         return Inertia::render('Clients/Create', [
             'clients' => $clients
         ]);
+
     }
 
     public function register(Request $request)
     {
+
         $data = $request->all();
 
         $request->validate([
@@ -78,10 +82,12 @@ class ClientController extends Controller
         // ]);
 
         return redirect()->route('clients.index');
+
     }
 
     public function update(Request $request)
     {
+
         $data = $request->all();
 
         $request->validate([
@@ -97,5 +103,6 @@ class ClientController extends Controller
         $client->save();
 
         return;
+
     }
 }
