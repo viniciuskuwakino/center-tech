@@ -42,12 +42,37 @@ watch(selected, () => {
     emit('getClient', selected)
 })
 
+function localMask(phone) {
+
+    if (phone.length == 8) {
+        let p = phone.replace(/\D/g, '').match(/(\d{4})(\d{4})/)
+        return `${p[1]}-${p[2]}`
+    }
+
+    if (phone.length == 9) {
+        let p = phone.replace(/\D/g, '').match(/(\d{5})(\d{4})/)
+        return `${p[1]}-${p[2]}`
+    }
+
+    if (phone.length == 10) {
+        let p = phone.replace(/\D/g, '').match(/(\d{2})(\d{4})(\d{4})/)
+        return `(${p[1]}) ${p[2]}-${p[3]}`
+    }
+
+    if (phone.length == 11) {
+        let p = phone.replace(/\D/g, '').match(/(\d{2})(\d{5})(\d{4})/)
+        return `(${p[1]}) ${p[2]}-${p[3]}`
+    }
+
+    return phone
+
+}
 
 
 </script>
 
 <template>
-    <div class="top-16 w-72">
+    <div class="top-16 w-2/5">
         <Combobox v-model="selected">
             <div class="relative mt-1">
                 <div
@@ -55,7 +80,7 @@ watch(selected, () => {
                 >
                     <ComboboxInput
                         class="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
-                        :displayValue="(client) => client.name"
+                        :displayValue="(client) => client.name + ', ' + localMask(client.phone)"
                         @change="query = $event.target.value"
                     />
                     <ComboboxButton
@@ -99,7 +124,7 @@ watch(selected, () => {
                                     class="block truncate"
                                     :class="{ 'font-medium': selected, 'font-normal': !selected }"
                                 >
-                                    {{ client.name }}
+                                    {{ client.name }}, {{ localMask(client.phone) }}
                                 </span>
                                 <span
                                     v-if="selected"
