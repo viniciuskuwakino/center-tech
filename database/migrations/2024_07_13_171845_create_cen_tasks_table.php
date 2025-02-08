@@ -13,19 +13,12 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('client_id')
-                ->constrained()
-                ->onDelete('cascade');
-
             $table->string('device', 100);
             $table->string('brand', 100);
-            $table->string('model', 100)->nullable();
-            $table->string('serial_number', 100)->nullable();
-            $table->text('description')->nullable();
+            $table->string('model', 100);
+            $table->string('serial_number', 100);
+            $table->text('description');
             $table->decimal('price', 9, 2);
-            $table->boolean('status')->default(false);
-
             $table->timestamps();
         });
     }

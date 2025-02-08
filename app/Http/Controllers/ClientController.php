@@ -16,6 +16,7 @@ class ClientController extends Controller
         $search = isset($request['search']) ? $request['search'] : "";
 
         $clients = Client::with('tasks')
+                        ->where('user_id', Auth::user()->id)
                         ->where('name', 'like', '%' . $search . '%')
                         ->orWhere('phone', 'like', '%' . $search . '%')
                         ->orderBy('created_at', 'desc')
@@ -43,7 +44,9 @@ class ClientController extends Controller
     public function create(): Response
     {
 
-        $clients = Client::with('user')->get();
+        $clients = Client::with('user')
+                    ->where('user_id', Auth::user()->id)
+                    ->get();
 
         return Inertia::render('Clients/Create', [
             'clients' => $clients
@@ -62,9 +65,21 @@ class ClientController extends Controller
         ]);
 
         Client::create([
+            'user_id'   => Auth::user()->id,
             'name'      => $data['name'],
             'phone'     => $data['phone'],
         ]);
+
+        // $tasks = Task::with('client')
+        //         ->whereHas('client', function($query) {
+        //             $query->where('user_id', Auth::user()->id);
+        //         })
+        //         ->get();
+        
+
+        // return Inertia::render('Tasks/List', [
+        //     'tasks' => $tasks
+        // ]);
 
         return redirect()->route('clients.index');
 

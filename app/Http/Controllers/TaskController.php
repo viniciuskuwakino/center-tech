@@ -21,7 +21,8 @@ class TaskController extends Controller
 
         $tasks = Task::with('client')
                 ->whereHas('client', function($query) use ($search) {
-                    $query->where('name', 'like', '%' . $search . '%')
+                    $query->where('user_id', Auth::user()->id)
+                        ->where('name', 'like', '%' . $search . '%')
                         ->orWhere('phone', 'like', '%' . $search . '%');
                 })
                 ->orderBy('created_at', 'desc')
@@ -38,6 +39,7 @@ class TaskController extends Controller
     public function create(): Response
     {
         $clients = Client::with('user')
+                    ->where('user_id', Auth::user()->id)
                     ->orderBy('name', 'asc')
                     ->get();
 
@@ -52,6 +54,7 @@ class TaskController extends Controller
         $data = $request->all();
 
         Task::create([
+            // 'user_id'       => Auth::user()->id,
             'client_id'     => $data['client_id'],
             'device'        => $data['device'],
             'brand'         => $data['brand'],
@@ -63,6 +66,9 @@ class TaskController extends Controller
         ]);
 
         $tasks = Task::with('client')
+                ->whereHas('client', function($query) {
+                    $query->where('user_id', Auth::user()->id);
+                })
                 ->orderBy('created_at', 'desc')
                 ->paginate(10);
 
