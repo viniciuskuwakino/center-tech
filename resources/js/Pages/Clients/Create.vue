@@ -1,7 +1,7 @@
 
 <template>
 
-    <Head title="Profile" />
+    <Head title="Adicionar Cliente" />
 
     <AuthenticatedLayout>
         <template #header>

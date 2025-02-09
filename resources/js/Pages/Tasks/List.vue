@@ -1,5 +1,5 @@
 <template>
-    <Head title="Tasks" />
+    <Head title="Serviços" />
 
     <AuthenticatedLayout>
         <template #header>
